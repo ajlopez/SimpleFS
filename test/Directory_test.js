@@ -38,5 +38,31 @@ contract("Directory", function (accounts) {
         
         assert.equal(address, ZERO_ADDRESS);
     });
+    
+    it('get unknown directory address as zero', async function () {
+        const address = await directory.directories("foo");
+        
+        assert.equal(address, ZERO_ADDRESS);
+    });
+    
+    it('link subdirectory', async function () {
+        const subdirectory = await Directory.new();
+        
+        await directory.linkDirectory("foo", subdirectory.address);
+
+        const address = await directory.directories("foo");
+        
+        assert.equal(address, subdirectory.address);
+    });
+    
+    it('link and unlink subdirectory', async function () {
+        const subdirectory = await Directory.new();        
+        await directory.linkDirectory("foo", subdirectory.address);
+        await directory.unlinkDirectory("foo");
+
+        const address = await directory.directories("foo");
+        
+        assert.equal(address, ZERO_ADDRESS);
+    });
 });
 

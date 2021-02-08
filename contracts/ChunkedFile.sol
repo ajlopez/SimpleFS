@@ -12,5 +12,16 @@ contract ChunkedFile {
             
         return length;
     }
+    
+    function noChunks() public view returns (uint) {
+        return chunks.length;
+    }
+    
+    function put(uint nchunk, bytes memory content) public {
+        if (nchunk == chunks.length)
+            chunks.push(content);
+        else
+            chunks[nchunk] = content;
+    }
 }
 

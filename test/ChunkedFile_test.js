@@ -24,16 +24,20 @@ contract("ChunkedFile", function (accounts) {
         assert.equal(nochunks, 0);
     });
     
-    it('add first chunk', async function () {
-        const content = Buffer.from('010203', 'hex');
+    it('put and get first chunk', async function () {
+        const bytes = Buffer.from('010203', 'hex');
         
-        await file.put(0, content);
+        await file.put(0, bytes);
         
         const length = Number(await file.length());
         assert.equal(length, 3);
         
         const nochunks = Number(await file.noChunks());        
         assert.equal(nochunks, 1);
+        
+        const content = await file.get(0);
+        assert.ok(content !== null);
+        assert.equal(content.substring(2), bytes.toString('hex'));
     });
 });
 

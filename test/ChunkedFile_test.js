@@ -1,10 +1,12 @@
 const ChunkedFile = artifacts.require("ChunkedFile");
 
+const truffleAssertions = require('truffle-assertions');
 const fs = require('fs');
 const path = require('path');
 
 contract("ChunkedFile", function (accounts) {
     const alice = accounts[0];
+    const bob = accounts[1];
     
     let file;
     
@@ -44,6 +46,18 @@ contract("ChunkedFile", function (accounts) {
         const content = await file.get(0);
         assert.ok(content !== null);
         assert.equal(content.substring(2), bytes.toString('hex'));
+    });
+    
+    it('only owner can put chunk', async function () {
+        const bytes = Buffer.from('010203', 'hex');
+        
+        await truffleAssertions.reverts(file.put(0, bytes, { from: bob }));
+        
+        const length = Number(await file.length());
+        assert.equal(length, 0);
+        
+        const nochunks = Number(await file.noChunks());        
+        assert.equal(nochunks, 0);
     });
     
     it('put and get two chunks', async function () {

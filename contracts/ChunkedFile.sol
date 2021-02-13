@@ -10,6 +10,11 @@ contract ChunkedFile {
         owner = msg.sender;
     }
     
+    modifier onlyOwner() {
+        require(owner == msg.sender);
+        _;
+    }
+    
     function length() public view returns (uint) {
         uint length;
         
@@ -32,7 +37,7 @@ contract ChunkedFile {
         return chunks[nchunk];
     }
     
-    function put(uint nchunk, bytes memory content) public {
+    function put(uint nchunk, bytes memory content) public onlyOwner {
         if (nchunk == chunks.length)
             chunks.push(content);
         else

@@ -15,6 +15,10 @@ contract ChunkedFile {
         _;
     }
     
+    function setOwner(address newowner) public {
+        owner = newowner;
+    }
+    
     function length() public view returns (uint) {
         uint length;
         

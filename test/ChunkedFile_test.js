@@ -32,6 +32,14 @@ contract("ChunkedFile", function (accounts) {
         assert.equal(nochunks, 0);
     });
     
+    it('set owner', async function () {
+        await file.setOwner(bob);
+        
+        const owner = Number(await file.owner());
+        
+        assert.equal(owner, bob);
+    });
+    
     it('put and get first chunk', async function () {
         const bytes = Buffer.from('010203', 'hex');
         

@@ -100,5 +100,20 @@ contract("ChunkedFile", function (accounts) {
         assert.ok(content0 !== null);
         assert.equal(content0.substring(2), bytes0.toString('hex'));
     });
+    
+    it('only owner can discard chunk', async function () {
+        const bytes0 = Buffer.from('010203', 'hex');
+        const bytes1 = Buffer.from('0405', 'hex');
+        
+        await file.put(0, bytes0);
+        await file.put(1, bytes1);
+        await truffleAssertions.reverts(file.setNoChunks(1, { from: bob }));
+        
+        const length = Number(await file.length());
+        assert.equal(length, 5);
+        
+        const nochunks = Number(await file.noChunks());        
+        assert.equal(nochunks, 2);
+    });
 });
 

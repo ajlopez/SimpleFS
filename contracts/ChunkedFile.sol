@@ -28,7 +28,7 @@ contract ChunkedFile {
         return chunks.length;
     }
     
-    function setNoChunks(uint nchunks) public {
+    function setNoChunks(uint nchunks) public onlyOwner {
         while (chunks.length > nchunks)
             chunks.pop();
     }

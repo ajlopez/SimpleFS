@@ -40,6 +40,14 @@ contract("ChunkedFile", function (accounts) {
         assert.equal(owner, bob);
     });
     
+    it('only owner can set owner', async function () {
+        await truffleAssertions.reverts(file.setOwner(bob, { from: bob }));
+        
+        const owner = Number(await file.owner());
+        
+        assert.equal(owner, alice);
+    });
+    
     it('put and get first chunk', async function () {
         const bytes = Buffer.from('010203', 'hex');
         

@@ -15,7 +15,7 @@ contract ChunkedFile {
         _;
     }
     
-    function setOwner(address newowner) public {
+    function setOwner(address newowner) public onlyOwner {
         owner = newowner;
     }
     

@@ -4,7 +4,8 @@ Simple File Storage for Ethereum and RSK blockchains
 
 ## References
 
-TBD
+- [Solidity Tutorial: all about Array](https://medium.com/@jeancvllr/solidity-tutorial-all-about-array-efdff4613694)
+- [How to reset the length of array in solidity v6.0?](https://ethereum.stackexchange.com/questions/80743/how-to-reset-the-length-of-array-in-solidity-v6-0)
 
 ## Use cases
 

@@ -17,6 +17,11 @@ contract ChunkedFile {
         return chunks.length;
     }
     
+    function setNoChunks(uint nchunks) public {
+        while (chunks.length > nchunks)
+            chunks.pop();
+    }
+    
     function get(uint nchunk) public view returns (bytes memory) {
         return chunks[nchunk];
     }

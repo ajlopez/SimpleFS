@@ -2,7 +2,13 @@
 pragma solidity ^0.6.12;
 
 contract ChunkedFile {
+    address public owner;
+    
     bytes[] public chunks;
+    
+    constructor() public {
+        owner = msg.sender;
+    }
     
     function length() public view returns (uint) {
         uint length;

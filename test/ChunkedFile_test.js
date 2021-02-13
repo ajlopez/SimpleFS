@@ -18,6 +18,12 @@ contract("ChunkedFile", function (accounts) {
         assert.equal(length, 0);
     });
     
+    it('initial owner', async function () {
+        const owner = Number(await file.owner());
+        
+        assert.equal(owner, alice);
+    });
+    
     it('initial number of chunks', async function () {
         const nochunks = Number(await file.noChunks());
         

@@ -7,12 +7,12 @@
   <body>
     <h1><%= title %></h1>
     <ul>
+    <% for (n in imagesdata) { 
+        const imagedata = imagesdata[n]; %>
         <li>
-            <a href='/images/0xce5cf24112ffc8483c40f32277a55bd67f211f2f'>Landscape</a>
+            <a href='/images/<%= n %>'><%= imagedata.title %> (<%= imagedata.width %> x <%= imagedata.height %>)</a>
         </li>
-        <li>
-            <a href='/images/0x1eb0c9073fd01476a85501e2f7dca95d6571be9c'>Fruits</a>
-        </li>
+    <% } %>    
     </ul>
   </body>
 </html>

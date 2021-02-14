@@ -22,6 +22,7 @@ Execute
 npm run start
 ```
 
+Navigate with your browser to [http://localhost:3000](http://localhost:3000).
 
 ## References
 

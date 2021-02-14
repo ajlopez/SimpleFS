@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <ul>
-    <% for (n in imagesdata) { 
-        const imagedata = imagesdata[n]; %>
-        <li>
-            <a href='/images/<%= n %>'><%= imagedata.title %> (<%= imagedata.width %> x <%= imagedata.height %>)</a>
-        </li>
-    <% } %>    
-    </ul>
-  </body>
-</html>
+<%- include('header') %>  
+
+    <section class="section">
+        <h1 class="title"><%= title %></h1>
+            <p class="subtitle">
+            Images stored in RSK Testnet Blockchain
+            </p>
+        <ul>
+        <% for (n in imagesdata) { 
+            const imagedata = imagesdata[n]; %>
+            <li>
+                <a href='/images/<%= n %>'><%= imagedata.title %> (<%= imagedata.width %> x <%= imagedata.height %>)</a>
+            </li>
+        <% } %>    
+        </ul>
+    </section>
+
+<%- include('footer') %>  

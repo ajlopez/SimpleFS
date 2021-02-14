@@ -11,7 +11,9 @@ router.get('/:filename', async function(req, res, next) {
     const extension = p >= 0 ? filename.substring(p + 1) : '';
     
     const nchunks = await files.getNoChunks(address);
-    
+
+    res.set('Cache-control', 'public, max-age=3600');
+
     for (let k = 0; k < nchunks; k++)
         res.write(await files.getChunk(address, k));
     

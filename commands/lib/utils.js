@@ -116,6 +116,34 @@ function processArguments(config, args) {
     return args;
 }
 
+function getConfigurationOptions(config) {
+    const options = {};
+    
+    if (!config || !config.options)
+        return options;
+    
+    if (config.options.gas)
+        options.gas = config.options.gas;
+    
+    if (config.options.gasPrice)
+        options.gasPrice = config.options.gasPrice;
+    
+    return options;
+}
+
+function getContract(name) {
+    let contract;
+    
+    try {
+        contract = require('../build/contracts/' + name + '.json');
+    }
+    catch (ex) {
+        contract = require('../../build/contracts/' + name + '.json');
+    }
+    
+    return contract;
+}
+
 module.exports = {
     rskapi: rskapi ? rskapi : localrskapi,
     
@@ -126,6 +154,9 @@ module.exports = {
     getArguments: processArguments,
     
     loadConfiguration: loadConfiguration,
-    saveConfiguration: saveConfiguration
+    saveConfiguration: saveConfiguration,
+    getConfigurationOptions: getConfigurationOptions,
+    
+    getContract: getContract
 };
 

@@ -44,16 +44,29 @@ async function uploadChunk(nochunk) {
         
         const chunk = bytes.slice(nochunk * chunksize, nochunk * chunksize + chunksize);
         
+        const options = {};
+        
+        if (config.options && config.options.gasPrice)
+            options.gasPrice = config.options.gasPrice;
+        
+        if (config.options && config.options.gas)
+            options.gas = config.options.gas;
+        
         const txh = await client.invoke(
             sender, 
             receiver, 
             "put(uint256,bytes)", 
-            [ nochunk, '0x' + chunk.toString('hex') ]
+            [ nochunk, '0x' + chunk.toString('hex') ],
+            options
         );
         
         console.log('transaction', txh);
-//        const txr = await client.receipt(txh, 0);
-//        console.log(txr && parseInt(txr.status) ? 'done' : 'failed');
+        
+        if (typeof txh !== 'string')
+            return;
+        
+        const txr = await client.receipt(txh, 120);
+        console.log(txr && parseInt(txr.status) ? 'done' : 'failed');
     }
     catch (ex) {
         console.log(ex);
@@ -71,7 +84,12 @@ async function uploadChunk(nochunk) {
     while (nchunks * chunksize < flength) {
         await uploadChunk(nchunks);
         
-        nchunks++;
+        nchunks = Number(await client.call(
+            sender.address,
+            receiver,
+            "noChunks()",
+            []
+        ));
     }
 })();
 

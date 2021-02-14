@@ -1,66 +1,35 @@
 const Directory = artifacts.require("Directory");
-const File = artifacts.require("File");
-
-const fs = require('fs');
-const path = require('path');
 
 contract("Directory", function (accounts) {
     const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
     
     const alice = accounts[0];
-    let directory;
-    let smallFile;
+    const bob = accounts[1];
+    const charlie = accounts[2];
     
     beforeEach(async function () {
         directory = await Directory.new();
-        smallFile = await File.new(Buffer.from('010203', 'hex'));
     });
     
-    it('get unknown file address as zero', async function () {
-        const address = await directory.files("foo");
+    it('get unknown item as address as zero', async function () {
+        const address = await directory.items("foo");
         
         assert.equal(address, ZERO_ADDRESS);
     });
     
-    it('link small file', async function () {
-        await directory.linkFile("foo.bin", smallFile.address);
+    it('link item', async function () {
+        await directory.link("bob", bob);
 
-        const address = await directory.files("foo.bin");
+        const address = await directory.items("bob");
         
-        assert.equal(address, smallFile.address);
+        assert.equal(address, bob);
     });
     
-    it('link and unlink small file', async function () {
-        await directory.linkFile("foo.bin", smallFile.address);
-        await directory.unlinkFile("foo.bin");
+    it('link and unlink item', async function () {
+        await directory.link("bob", bob);
+        await directory.unlink("bob");
 
-        const address = await directory.files("foo.bin");
-        
-        assert.equal(address, ZERO_ADDRESS);
-    });
-    
-    it('get unknown directory address as zero', async function () {
-        const address = await directory.directories("foo");
-        
-        assert.equal(address, ZERO_ADDRESS);
-    });
-    
-    it('link subdirectory', async function () {
-        const subdirectory = await Directory.new();
-        
-        await directory.linkDirectory("foo", subdirectory.address);
-
-        const address = await directory.directories("foo");
-        
-        assert.equal(address, subdirectory.address);
-    });
-    
-    it('link and unlink subdirectory', async function () {
-        const subdirectory = await Directory.new();        
-        await directory.linkDirectory("foo", subdirectory.address);
-        await directory.unlinkDirectory("foo");
-
-        const address = await directory.directories("foo");
+        const address = await directory.items("bob");
         
         assert.equal(address, ZERO_ADDRESS);
     });

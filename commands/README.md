@@ -91,5 +91,23 @@ node invoke alice token1 transfer(address,uint256) charlie,1000
 If the invocation has more than one argument,
  they are separated by commas.
 
+## Managing File
 
+Deploy a `ChunkedFile` smart contract:
 
+```
+node invoke root file1 ChunkedFile
+```
+
+Now, upload a local file (try only small files, with less than 20K bytes in size)
+using a chunk size of 4096 bytes:
+
+```
+node upload root file1 <localfilename> 4096
+```
+
+If you want to download a file, execute:
+
+```
+node download root file1 <localfilename>
+```

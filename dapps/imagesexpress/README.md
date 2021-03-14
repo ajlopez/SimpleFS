@@ -14,6 +14,26 @@ Execute
 npm install
 ```
 
+## Configure
+
+Edit the file `config.json`:
+
+```json
+{
+    "host": "https://public-node.testnet.rsk.co:443"
+}
+```
+
+If you have a local node synched with RSK testnet, change
+the host property, ie:
+
+```json
+{
+    "host": "http://localhost:4444"
+}
+```
+
+
 ## Launch Dapp
 
 Execute
